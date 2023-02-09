@@ -1,10 +1,17 @@
+import { AuthModule } from './auth/auth.module';
+import { TodoModule } from './todo/todo.module';
+import { TodoService } from './todo/todo.service';
+import { TodoController } from './todo/todo.controller';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    AuthModule,
+    TodoModule,],
+  controllers: [
+    TodoController, AppController],
+  providers: [
+    TodoService],
 })
-export class AppModule {}
+export class AppModule { }
