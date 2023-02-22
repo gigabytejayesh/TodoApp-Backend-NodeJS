@@ -9,13 +9,20 @@ export class AuthController {
 
     @Get()
     @UseGuards(AuthGuard('google'))
-    async googleAuth(@Req() request) {
-
+    async googleAuth() {
+        console.log("Attempting to login using Google.");
     }
 
     @Get('google/callback')
     @UseGuards(AuthGuard('google'))
-    googleAuthRedirect(@Req() request) {
-        return this.authService.googleLogin(request);
+    async googleAuthRedirect(@Req() request) {
+        try {
+            let user = this.authService.googleLogin(request);
+            return user;
+
+            // Set cookie
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

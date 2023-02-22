@@ -1,19 +1,19 @@
-/*
-https://docs.nestjs.com/providers#services
-*/
-
 import { Injectable } from '@nestjs/common';
+import { UserRepositoriesService } from 'src/repositories/user/user-repository.service';
 
 @Injectable()
 export class AuthService {
 
-    googleLogin(request) {
+    constructor(private readonly userRepositoriesService: UserRepositoriesService) { }
+
+    async googleLogin(request) {
         if (!request.user) {
-            return 'No user present in google'
+            throw new Error("User info not available!")
         }
-        return {
-            message: 'User Info from Google',
-            user: request.user
+        let existingUser = await this.userRepositoriesService.getUsersByEmail(request.user.email)
+        if (!existingUser) {
+            existingUser = await this.userRepositoriesService.createUser(request.user)
         }
+        return existingUser;
     }
 }
