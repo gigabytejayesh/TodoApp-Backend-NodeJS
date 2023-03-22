@@ -9,4 +9,12 @@ export class UserService {
     async getAllUsers() {
         return this.userRepositoriesService.getAllUsers()
     }
+
+    async getUserByID(user_id: string) {
+        try {
+            return await this.userRepositoriesService.getUsersByUserID(user_id);
+        } catch (error) {
+            throw error;
+        }
+    }
 }

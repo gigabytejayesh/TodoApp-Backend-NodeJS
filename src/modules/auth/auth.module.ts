@@ -4,13 +4,13 @@ import { Module } from '@nestjs/common';
 import { GoogleStrategy } from 'src/utils/google.strategy';
 import { SupabaseStrategy } from 'src/utils/supabase.strategy';
 import { UserRepositoriesModule } from 'src/repositories/user/user-repository.module';
-import { UserRepositoriesService } from 'src/repositories/user/user-repository.service';
+import { JWTTokenHelper } from 'src/utils/jwt-token-helper';
 
 @Module({
     imports: [UserRepositoriesModule],
     controllers: [
         AuthController,],
     providers: [
-        AuthService, GoogleStrategy, SupabaseStrategy],
+        AuthService, GoogleStrategy, SupabaseStrategy, JWTTokenHelper],
 })
 export class AuthModule { }

@@ -4,29 +4,29 @@ import {
   Column,
   PrimaryColumn,
   CreateDateColumn,
-} from "typeorm";
+} from 'typeorm';
 
-
-@Entity({ name: "user" })
+@Entity({ name: 'user' })
 export class User extends BaseEntity {
-  @PrimaryColumn("bigint")
+  @PrimaryColumn('bigint')
   public id!: number;
 
-  @Column("uuid")
-  public user_id: number;
+  @Column('uuid', { name: 'user_id' })
+  public userId: number;
 
-  @Column("varchar")
+  @Column('varchar')
   public name: string;
 
-  @Column("varchar")
+  @Column('varchar')
   public email: string;
 
-  @Column("bigint")
-  public mobile_no: number;
+  @Column('bigint', { name: 'mobile_no' })
+  public mobileNo: number;
 
   @CreateDateColumn({
-    type: "timestamp without time zone",
-    default: () => "now()",
+    type: 'timestamp without time zone',
+    default: () => 'now()',
+    name: 'created_at',
   })
-  public created_at?: Date;
+  public createdAt?: Date;
 }
