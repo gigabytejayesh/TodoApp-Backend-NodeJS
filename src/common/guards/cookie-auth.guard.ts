@@ -2,9 +2,8 @@ import {
   Injectable,
   CanActivate,
   ExecutionContext,
-  UnauthorizedException,
+  HttpException,
 } from '@nestjs/common';
-import { NotFoundException } from '@nestjs/common/exceptions';
 import { Request } from 'express';
 import { User } from 'src/repositories/user/user-repository.entity';
 import { UserRepositoriesService } from 'src/repositories/user/user-repository.service';
@@ -24,20 +23,20 @@ export class CookieAuthGuard implements CanActivate {
       let tokenData: any = await new JWTTokenHelper().verifyToken(cookieValue);
       // TODO: Add Interface for tokenData
       if (!tokenData) {
-        new UnauthorizedException('Invalid token');
+        console.log('Invalid token provided');
         return false;
       }
       let user: User = await this.userRepository.getUsersByUserID(tokenData.id);
       if (!user) {
-        throw new NotFoundException(
+        throw new HttpException(
           `User with email id ${tokenData.email} is not available. Please contact our support at support@my-todo.in`,
+          401,
         );
       }
-      console.log(user);
       request.user = user;
       return true;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
   }
 }

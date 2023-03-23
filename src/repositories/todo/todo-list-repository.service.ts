@@ -41,16 +41,46 @@ export class TodoListRepositoryService {
     }
   }
 
+  async getTodoListByID(todoId: string): Promise<TodoList | null> {
+    try {
+      const queryBuilder = this.baseQueryBuilder();
+      queryBuilder.where('todo_id = :todoId', { todoId });
+      const item: TodoList | null = await queryBuilder.getOne();
+      return item;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   async addToList(todoListData: any): Promise<TodoList> {
     try {
-      const { content, user_id, created_at } = todoListData;
+      const { content, userId, createdAt } = todoListData;
       const newRecord = this.todoListRepository.create({
         content,
-        userId: user_id,
-        createdAt: created_at,
+        userId,
+        createdAt,
         todoId: await uuidv4(),
       });
       return await this.todoListRepository.save(newRecord);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  async updateToList(
+    todoId: string,
+    todoListData: Partial<TodoList>,
+  ): Promise<TodoList> {
+    try {
+      const queryBuilder = this.baseQueryBuilder();
+      await queryBuilder
+        .update(TodoList)
+        .set(todoListData)
+        .where('todo_id = :todoId', { todoId })
+        .execute();
+      return await this.getTodoListByID(todoId);
     } catch (error) {
       console.log(error);
       throw error;
