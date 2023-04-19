@@ -34,7 +34,7 @@ export class AuthController {
         secure: true,
         maxAge: 86400000,
       });
-      res.redirect('/');
+      res.redirect(`${process.env.REACT_APP_BASEURL}workspace`);
     } catch (error) {
       console.log(error);
     }

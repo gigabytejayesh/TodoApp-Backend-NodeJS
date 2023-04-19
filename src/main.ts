@@ -15,6 +15,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);
   app.useGlobalFilters(new HttpExceptionFilter());
-  await app.listen(3000);
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
+  await app.listen(5000);
 }
 bootstrap();
