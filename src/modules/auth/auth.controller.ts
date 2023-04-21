@@ -18,7 +18,7 @@ export class AuthController {
   }
 
   @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
+  // @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(
     @Req() request: Request,
     @Res({ passthrough: true }) res: Response,
