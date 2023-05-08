@@ -15,20 +15,20 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);
   app.useGlobalFilters(new HttpExceptionFilter());
-  const options = {
-    origin: [/^(.*)/],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    preflightContinue: false,
-    optionsSuccessStatus: 200,
-    credentials: true,
-    allowedHeaders:
-      'Origin,X-Requested-With,Content-Type,Accept,Authorization,authorization,X-Forwarded-for',
-  };
-  // {
-  //   origin: '*',
+  // const options = {
+  //   origin: [/^(.*)/],
   //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  //   preflightContinue: false,
+  //   optionsSuccessStatus: 200,
   //   credentials: true,
-  // }
+  //   allowedHeaders:
+  //     'Origin,X-Requested-With,Content-Type,Accept,Authorization,authorization,X-Forwarded-for',
+  // };
+  const options = {
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  };
   app.enableCors(options);
   await app.listen(5000);
 }
