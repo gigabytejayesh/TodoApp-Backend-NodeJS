@@ -16,7 +16,7 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, document);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableCors({
-    origin: true,
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
