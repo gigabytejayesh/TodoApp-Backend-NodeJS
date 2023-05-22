@@ -41,14 +41,35 @@ export class UserRepositoriesService {
     }
   }
 
-  async createUser(userObject: any) {
-    const { firstName, lastName, email } = userObject;
-    const newUserRepo = this.userRepository.create({
-      name: firstName + ' ' + lastName,
-      email,
-      userId: await uuidv4(),
-    });
+  async createUser(userObject: any): Promise<User> {
+    try {
+      const { firstName, lastName, email, picture } = userObject;
+      const newUserRepo = this.userRepository.create({
+        name: firstName + ' ' + lastName,
+        email,
+        avatar: picture,
+        userId: await uuidv4(),
+      });
+      return await this.userRepository.save(newUserRepo);
+    } catch (error) {
+      throw error;
+    }
+  }
 
-    return await this.userRepository.save(newUserRepo);
+  async updateUser(userObject: any, user_id: string): Promise<any> {
+    try {
+      const { firstName, lastName, picture } = userObject;
+      const queryBuilder = this.baseQueryBuilder();
+      return await queryBuilder
+        .update(User)
+        .set({
+          name: firstName + ' ' + lastName,
+          avatar: picture,
+        })
+        .where('user_id = :user_id', { user_id })
+        .execute();
+    } catch (error) {
+      throw error;
+    }
   }
 }

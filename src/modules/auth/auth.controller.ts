@@ -28,6 +28,7 @@ export class AuthController {
       let jwtToken = await this.jwtTokenHelper.signToken({
         id: user.userId,
         email: user.email,
+        profile: user.picture,
       });
       res.cookie(process.env.COOKIE_NAME, jwtToken, {
         httpOnly: true,

@@ -12,7 +12,7 @@ export class User extends BaseEntity {
   public id!: number;
 
   @Column('uuid', { name: 'user_id' })
-  public userId: number;
+  public userId: string;
 
   @Column('varchar')
   public name: string;
@@ -22,6 +22,9 @@ export class User extends BaseEntity {
 
   @Column('bigint', { name: 'mobile_no' })
   public mobileNo: number;
+
+  @Column('varchar')
+  public avatar: string;
 
   @CreateDateColumn({
     type: 'timestamp without time zone',

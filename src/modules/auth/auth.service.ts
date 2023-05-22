@@ -19,6 +19,14 @@ export class AuthService {
         existingUser = await this.userRepositoriesService.createUser(
           request.user,
         );
+      } else {
+        await this.userRepositoriesService.updateUser(
+          request.user,
+          existingUser.userId,
+        );
+        existingUser = await this.userRepositoriesService.getUsersByUserID(
+          existingUser.userId,
+        );
       }
       existingUser['accessToken'] = request.user.accessToken;
       existingUser['picture'] = request.user?.picture;
